@@ -33,9 +33,13 @@ class FileStorage:
     def reload(self):
         """Deserializes the JSON file to __objects
         raising no exceptions if not exist"""
+        from models.base_model import BaseModel
 
         if not os.path.isfile(FileStorage.__file_path):
             return
         with open(FileStorage.__file_path, "r+", encoding="utf-8") as f:
             obj_j = json.load(f)
-            FileStorage.__objects = obj_j
+            for v in obj_j.values():
+                cl = v['__class__']
+                del v['__class__']
+                self.new(eval(cl)(**v))
