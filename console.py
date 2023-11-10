@@ -95,6 +95,27 @@ class HBNBCommand(cmd.Cmd):
             storage.save()
         except KeyError:
             print("** no instance found **")
+
+    def do_all(self, args):
+        """USAGE: all or all classname
+        shows all objects, or all objects of a class.
+        """
+        print_list = []
+
+        if args:
+            args = args.split(' ')[0]
+
+            if args != "BaseModel":
+                print("** class doesn't exist **")
+                return
+            for k, v in storage.all().items():
+                if k.split('.')[0] == args:
+                    print_list.append(str(v))
+        else:
+            for k, v in storage.all().items():
+                print_list.append(str(v))
+
+        print(print_list)
         
 
 
