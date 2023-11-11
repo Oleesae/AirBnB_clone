@@ -12,7 +12,11 @@ class HBNBCommand(cmd.Cmd):
 
     prompt = '(hbnb) '
 
-    classes = {'BaseModel': BaseModel, 'User': User}
+    __classes = {
+        'BaseModel': BaseModel, 'User': User, 'Place': Place,
+        'State': State, 'City': City, 'Amenity': Amenity,
+        'Review': Review
+    }
 
     def emptyline(self):
         """Overrides the emptyline method of CMD"""
@@ -37,7 +41,7 @@ class HBNBCommand(cmd.Cmd):
         """
         if not args:
             print("** class name missing **")
-        elif args not in HBNBCommand.classes:
+        elif args not in HBNBCommand.__classes:
             print("** class doesn't exist **")
         else:
             print(eval(args)().id)
@@ -57,7 +61,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
 
-        if cl_name not in HBNBCommand.classes:
+        if cl_name not in HBNBCommand.__classes:
             print("** class doesn't exist **")
             return
 
@@ -84,7 +88,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
 
-        if cl_name not in HBNBCommand.classes:
+        if cl_name not in HBNBCommand.__classes:
             print("** class doesn't exist **")
             return
 
@@ -108,7 +112,7 @@ class HBNBCommand(cmd.Cmd):
         if args:
             args = args.split(' ')[0]
 
-            if args not in HBNBCommand.classes:
+            if args not in HBNBCommand.__classes:
                 print("** class doesn't exist **")
                 return
             for k, v in storage.all().items():

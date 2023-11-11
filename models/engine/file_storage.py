@@ -35,6 +35,10 @@ class FileStorage:
         raising no exceptions if not exist"""
         from models.base_model import BaseModel
         from models.user import User
+        from models.state import State
+        from models.city import City
+        from models.amenity import Amenity
+        from models.review import Review
 
         if not os.path.isfile(FileStorage.__file_path):
             return
