@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """The Review Module"""
-from models.base_models import BaseModel
+from models.base_model import BaseModel
 from models import storage
 
 
