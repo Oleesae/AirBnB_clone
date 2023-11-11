@@ -34,6 +34,7 @@ class FileStorage:
         """Deserializes the JSON file to __objects
         raising no exceptions if not exist"""
         from models.base_model import BaseModel
+        from models.user import User
 
         if not os.path.isfile(FileStorage.__file_path):
             return

@@ -3,6 +3,7 @@
 import cmd
 import os
 from models.base_model import BaseModel
+from models.user import User
 from models import storage
 
 
@@ -10,6 +11,8 @@ class HBNBCommand(cmd.Cmd):
     """HBNBCommand class"""
 
     prompt = '(hbnb) '
+
+    classes = {'BaseModel': BaseModel, 'User': User}
 
     def emptyline(self):
         """Overrides the emptyline method of CMD"""
@@ -34,7 +37,7 @@ class HBNBCommand(cmd.Cmd):
         """
         if not args:
             print("** class name missing **")
-        elif args != "BaseModel":
+        elif args not in HBNBCommand.classes:
             print("** class doesn't exist **")
         else:
             print(eval(args)().id)
@@ -54,7 +57,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
 
-        if cl_name != "BaseModel":
+        if cl_name not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
 
@@ -81,7 +84,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
 
-        if cl_name != "BaseModel":
+        if cl_name not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
 
@@ -105,7 +108,7 @@ class HBNBCommand(cmd.Cmd):
         if args:
             args = args.split(' ')[0]
 
-            if args != "BaseModel":
+            if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
             for k, v in storage.all().items():
