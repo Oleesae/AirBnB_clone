@@ -17,16 +17,15 @@ class HBNBCommand(cmd.Cmd):
 
     prompt = '(hbnb) '
 
-    __classes = {
-        'BaseModel': BaseModel, 'User': User, 'Place': Place,
-        'State': State, 'City': City, 'Amenity': Amenity,
-        'Review': Review
-    }
+    __classes = {'BaseModel': BaseModel, 'User': User,
+                 'Place': Place, 'State': State, 'City': City,
+                 'Amenity': Amenity, 'Review': Review
+                 }
 
     def emptyline(self):
         """Overrides the emptyline method of CMD"""
         pass
-    
+
     def do_EOF(self, line):
         """
         Exits the program.
@@ -58,9 +57,9 @@ class HBNBCommand(cmd.Cmd):
         based on the class name and id.
         """
 
-        new = args.split(" ")
+        new = args.partition(" ")
         cl_name = new[0]
-        cl_id = new[1]
+        cl_id = new[2]
 
         if not cl_name:
             print("** class name missing **")
@@ -85,9 +84,9 @@ class HBNBCommand(cmd.Cmd):
         deletes an instance based on the class name and id.
         """
 
-        new = args.split(" ")
+        new = args.partition(" ")
         cl_name = new[0]
-        cl_id = new[1]
+        cl_id = new[2]
 
         if not cl_name:
             print("** class name missing **")
@@ -115,7 +114,7 @@ class HBNBCommand(cmd.Cmd):
         print_list = []
 
         if args:
-            args = args.split(' ')[0]
+            args = args.partition(' ')[0]
 
             if args not in HBNBCommand.__classes:
                 print("** class doesn't exist **")
@@ -128,8 +127,38 @@ class HBNBCommand(cmd.Cmd):
                 print_list.append(str(v))
 
         print(print_list)
-        
 
+    def do_update(self, args):
+        """USAGE: update class id attribute-name 'attribute-value'
+        Updates an instance based on the class name and id by adding
+        or updating attribute
+        """
+
+        arg1 = args.partition(" ")
+        cl_name = arg1[0]
+
+        # check for class name
+        if cl_name == "":
+            print("** class name missing **")
+        elif cl_name not in HBNBCommand.__classes:
+            print("** class doesn't exist **")
+        else:
+            arg2 = arg1[2].partition(" ")
+            cl_id = arg2[0]
+            if cl_id == "":
+                print("** instance id missing **")
+            elif True:
+                key = cl_name + '.' + cl_id
+                try:
+                    storage.all()[key]
+                except KeyError:
+                    print("** no instance found **")
+            else:
+                arg3 = arg2[2].partition(" ")
+                attr_name = arg3[0]
+                if attr_name == "":
+                    print("** attribute name missing **")
+            
 
 if __name__ == '__main__':
-    HBNBCommand().cmdloop()        
+    HBNBCommand().cmdloop()
