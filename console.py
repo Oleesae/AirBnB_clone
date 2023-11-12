@@ -151,14 +151,19 @@ class HBNBCommand(cmd.Cmd):
                 key = cl_name + '.' + cl_id
                 try:
                     storage.all()[key]
+                    arg3 = arg2[2].partition(" ")
+                    attr_name = arg3[0]
+                    if attr_name == "":
+                        print("** attribute name missing **")
+                    elif attr_name:
+                        list = storage.all()[key].to_dict()
+                        if attr_name in list:
+                            arg4 = arg3[2].partition(" ")
+                            attr_val = arg4[0]
+                        else:
+                            print("** value missing **")
                 except KeyError:
                     print("** no instance found **")
-            else:
-                arg3 = arg2[2].partition(" ")
-                attr_name = arg3[0]
-                if attr_name == "":
-                    print("** attribute name missing **")
-            
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
