@@ -3,7 +3,6 @@
 The File Storage Module
 """
 import json
-import os
 
 
 class FileStorage:
@@ -41,11 +40,12 @@ class FileStorage:
         from models.review import Review
         from models.place import Place
 
-        if not os.path.isfile(FileStorage.__file_path):
+        try:
+            with open(FileStorage.__file_path, "r+", encoding="utf-8") as f:
+                obj_j = json.load(f)
+                for v in obj_j.values():
+                    cl = v['__class__']
+                    del v['__class__']
+                    self.new(eval(cl)(**v))
+        except FileNotFoundError:
             return
-        with open(FileStorage.__file_path, "r+", encoding="utf-8") as f:
-            obj_j = json.load(f)
-            for v in obj_j.values():
-                cl = v['__class__']
-                del v['__class__']
-                self.new(eval(cl)(**v))
