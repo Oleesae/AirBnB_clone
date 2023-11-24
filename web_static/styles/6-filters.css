@@ -45,6 +45,9 @@ div .popover {
     background-color: #FAFAFA;
     visibility: hidden;
     list-style-type: none;
+    border: #DDDDDD 1px solid;
+    border-radius: 0 0 4px 4px;
+    z-index: 1;
 }
 
 .popover > li {
